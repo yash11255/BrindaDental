@@ -3,6 +3,7 @@ import Link from "next/link";
 import { dentists, images, serviceHref, services, site, whatsappLink, type Service } from "@/lib/site";
 import { Faq, Photo } from "@/components/ui";
 import EnquiryForm, { WhatsAppIcon } from "@/components/EnquiryForm";
+import Icon from "@/components/Icon";
 
 /** Full internal page for one treatment. `aesthetics` switches to the darker cosmetology identity. */
 export default function ServiceDetail({ s, aesthetics = false }: { s: Service; aesthetics?: boolean }) {
@@ -75,9 +76,13 @@ export default function ServiceDetail({ s, aesthetics = false }: { s: Service; a
           <div className="relative motion-safe:animate-[rise_1s_var(--ease-calm)_both] md:col-span-5">
             <Photo src={img.src} label={img.alt} priority className="kenburns aspect-[4/5] w-full" sizes="(min-width: 768px) 42vw, 100vw" />
             <div className="absolute -bottom-5 left-4 right-10 flex items-center gap-3 rounded-2xl border border-line bg-paper p-4 text-ink shadow-[0_12px_30px_-14px_rgba(28,35,33,0.35)] sm:-left-6 sm:right-auto">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-forest font-serif text-lg text-paper">
-                {s.performedBy.replace(/^Dr\.?\s*/, "").split(" ").map((w) => w[0]).slice(0, 2).join("")}
-              </span>
+              {doctor?.photo ? (
+                <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full"><Image src={doctor.photo} alt="" fill sizes="44px" className="object-cover" /></span>
+              ) : (
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-forest font-serif text-lg text-paper">
+                  {s.performedBy.replace(/^Dr\.?\s*/, "").split(" ").map((w) => w[0]).slice(0, 2).join("")}
+                </span>
+              )}
               <span>
                 <span className="block text-xs text-muted">Performed by</span>
                 <span className="block text-[15px] font-medium">{s.performedBy}</span>
@@ -129,9 +134,15 @@ export default function ServiceDetail({ s, aesthetics = false }: { s: Service; a
             </ul>
             {doctor && (
               <div data-reveal className="mt-6 flex items-start gap-4 rounded-2xl bg-stone p-6">
-                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-ink font-serif text-xl text-paper">
-                  {doctor.name.replace(/^Dr\.?\s*/, "").split(" ").map((w) => w[0]).slice(0, 2).join("")}
-                </span>
+                {doctor.photo ? (
+                  <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-white">
+                    <Image src={doctor.photo} alt={doctor.name} fill sizes="64px" className="object-cover" />
+                  </span>
+                ) : (
+                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-ink font-serif text-xl text-paper">
+                    {doctor.name.replace(/^Dr\.?\s*/, "").split(" ").map((w) => w[0]).slice(0, 2).join("")}
+                  </span>
+                )}
                 <div>
                   <p className="font-medium text-ink">{doctor.name}</p>
                   <p className="text-sm text-muted">{doctor.role}</p>
@@ -156,16 +167,80 @@ export default function ServiceDetail({ s, aesthetics = false }: { s: Service; a
             </div>
             <ul data-reveal-stagger className="mt-10 grid gap-px overflow-hidden rounded-[24px] bg-paper/10 sm:grid-cols-2 lg:grid-cols-3">
               {s.subTreatments.map((t, i) => (
-                <li key={t.name} className="group bg-ink p-7 transition-colors hover:bg-[#232b29]">
-                  <span className="num font-serif text-sm text-[#e7b8a0]">0{i + 1}</span>
+                <li key={t.name} className="group flex flex-col bg-ink transition-colors hover:bg-[#232b29]">
+                  {t.image && (
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image src={t.image} alt={t.name} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: "50% 30%" }} />
+                      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-7 pt-5">
+                  <div className="flex items-center justify-between">
+                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/10 text-[#f2b8ad] ring-1 ring-white/15 transition-colors group-hover:bg-clay group-hover:text-white">
+                      <Icon name={["sparkle", "face", "heart", "shield", "star", "award"][i % 6]} size={22} />
+                    </span>
+                    <span className="num font-serif text-sm text-white/35">0{i + 1}</span>
+                  </div>
                   <h3 className="mt-3 font-serif text-2xl text-paper">{t.name}</h3>
                   <p className="mt-2 leading-relaxed">{t.text}</p>
                   {t.duration && <p className="num mt-4 text-xs text-paper/45">{t.duration}</p>}
                   <a href={whatsappLink(`Hello, I'd like to book a consultation for ${t.name}.`)} target="_blank" rel="noopener"
-                    className="mt-5 inline-block text-sm text-paper underline decoration-paper/30 underline-offset-4 group-hover:decoration-paper">Enquire on WhatsApp →</a>
+                    className="mt-auto inline-block pt-5 text-sm text-paper underline decoration-paper/30 underline-offset-4 group-hover:decoration-paper">Enquire on WhatsApp →</a>
+                  </div>
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+      )}
+
+      {/* ── COSMETOLOGY: doctor feature + the wing ── */}
+      {dark && doctor && (
+        <section className="section scroll-mt-32">
+          <div className="container-x grid items-center gap-10 lg:grid-cols-12">
+            <div data-reveal className="relative lg:col-span-5">
+              {doctor.photo && (
+                <Photo src={doctor.photo} label={doctor.name} className="aspect-[4/5] rounded-3xl" sizes="(min-width: 1024px) 40vw, 100vw" position="50% 20%" />
+              )}
+              <div className="absolute -bottom-5 left-5 right-5 rounded-2xl bg-white p-4 shadow-xl ring-1 ring-line sm:right-auto">
+                <p className="font-serif text-lg font-bold text-ink">{doctor.name}</p>
+                <p className="text-sm text-clay">{doctor.role}</p>
+              </div>
+            </div>
+            <div className="lg:col-span-7 lg:pl-8">
+              <div data-reveal>
+                <p className="eyebrow">Meet your cosmetologist</p>
+                <h2 className="h2 mt-2">Skin care planned by a doctor, not a salon.</h2>
+                <p className="mt-4 text-[17px] leading-relaxed text-muted">
+                  Every skin and laser treatment at the Centre for Facial Aesthetics &amp; Lasers starts with a consultation with Dr. Sukhmani — your skin type, history and goals — before a written plan is made.
+                </p>
+              </div>
+              <ul data-reveal-stagger className="mt-6 grid gap-3 sm:grid-cols-2">
+                {["Personal skin assessment", "Written plan & cost upfront", "Settings chosen for Indian skin", "Same hygiene standards as the dental clinic"].map((t) => (
+                  <li key={t} className="flex items-center gap-3 rounded-xl border border-line bg-white p-4 text-[15px] font-medium text-ink">
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-forest-tint text-forest"><Icon name="check" size={16} /></span>{t}
+                  </li>
+                ))}
+              </ul>
+              <a href="#book" className="btn-primary mt-8 !rounded-xl">Book a consultation with Dr. Sukhmani</a>
+            </div>
+          </div>
+
+          <div className="container-x mt-20">
+            <div data-reveal className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="eyebrow">Inside the wing</p>
+                <h2 className="h2 mt-2">A calm, private space for your skin.</h2>
+              </div>
+              <Link href="/gallery" className="btn-outline !rounded-xl">View gallery <Icon name="arrow" size={16} /></Link>
+            </div>
+            <div data-reveal-stagger className="mt-8 grid gap-4 md:grid-cols-12">
+              <Photo src={images.facial.src} label={images.facial.alt} className="aspect-[4/3] md:col-span-7 md:aspect-auto md:h-full md:min-h-[420px]" sizes="(min-width: 768px) 58vw, 100vw" />
+              <div className="grid gap-4 md:col-span-5">
+                <Photo src={images.cosmetologyBed.src} label={images.cosmetologyBed.alt} className="aspect-[16/10]" sizes="(min-width: 768px) 40vw, 100vw" />
+                <Photo src={images.reception.src} label={images.reception.alt} className="aspect-[16/10]" sizes="(min-width: 768px) 40vw, 100vw" />
+              </div>
+            </div>
           </div>
         </section>
       )}

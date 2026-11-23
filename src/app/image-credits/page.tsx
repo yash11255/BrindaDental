@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Image credits", robots: { index: fal
 export default function Credits() {
   return (
     <>
-      <PageHero eyebrow="Credits" title="Image credits" text="Representative photos used under open licences until the clinic's own photography is ready." />
+      <PageHero eyebrow="Credits" title="Image credits" text="Most photos and videos on this site are the clinic's own. These explanatory images are used under open licences." />
       <section className="section">
         <ul className="container-x max-w-3xl divide-y divide-line border-y border-line">
           {imageCredits.map((c) => (

@@ -2,7 +2,7 @@
 // Clinic-specific claims marked [confirm] must be checked with the clinic before publishing.
 
 export type Category = "Implants" | "Cosmetic" | "General" | "Aesthetics";
-export type ImageKey = "clinic" | "chair" | "checkup" | "smile" | "implant" | "rootCanal" | "facial";
+export type ImageKey = "clinic" | "chair" | "checkup" | "smile" | "implant" | "rootCanal" | "facial" | "implantRoom" | "implantRoom2" | "cosmetologyBed" | "whitening" | "aligner";
 
 export type Service = {
   slug: string;
@@ -18,7 +18,7 @@ export type Service = {
   benefits: { title: string; text: string }[];
   process: { title: string; text: string }[];
   comparison?: { caption: string; head: string[]; rows: string[][] };
-  subTreatments?: { name: string; text: string; duration?: string }[];
+  subTreatments?: { name: string; text: string; duration?: string; image?: string }[];
   aftercare: string[];
   performedBy: string;
   faqs: { q: string; a: string }[];
@@ -31,7 +31,7 @@ export const services: Service[] = [
     name: "Dental Implants",
     icon: "🦷",
     category: "Implants",
-    image: "implant",
+    image: "implantRoom",
     short: "Single-tooth & full-arch solutions",
     tagline: "A fixed tooth that looks, feels and chews like your own.",
     intro:
@@ -191,7 +191,7 @@ export const services: Service[] = [
     name: "Teeth Whitening",
     icon: "😁",
     category: "Cosmetic",
-    image: "smile",
+    image: "whitening",
     short: "Professional, safe in-clinic whitening",
     tagline: "Visibly brighter in a single visit — with your gums protected.",
     intro:
@@ -239,7 +239,7 @@ export const services: Service[] = [
     name: "Check-up & Cleaning",
     icon: "🪥",
     category: "General",
-    image: "checkup",
+    image: "clinic",
     short: "Exam, scaling & polishing",
     tagline: "The 45 minutes that save you from bigger treatment later.",
     intro:
@@ -335,7 +335,7 @@ export const services: Service[] = [
     name: "Clear Aligners",
     icon: "🔲",
     category: "Cosmetic",
-    image: "smile",
+    image: "aligner",
     short: "Nearly invisible teeth straightening",
     tagline: "Straighter teeth without metal brackets.",
     intro:
@@ -383,7 +383,7 @@ export const services: Service[] = [
     name: "Emergency Dental Care",
     icon: "⚡",
     category: "General",
-    image: "rootCanal",
+    image: "chair",
     short: "Same-day help for pain & injuries",
     tagline: "In pain? Call before noon for a same-day slot.",
     intro:
@@ -451,12 +451,12 @@ export const services: Service[] = [
       "You want advice from a qualified professional, not a salon",
     ],
     subTreatments: [
-      { name: "Laser hair reduction", text: "Long-term reduction of unwanted hair on face and body.", duration: "15–60 min · 6–8 sessions" },
-      { name: "Chemical peels", text: "Controlled exfoliation for pigmentation, acne and dullness.", duration: "30 min · 4–6 sessions" },
-      { name: "HydraFacial & medi-facials", text: "Deep cleansing, extraction and hydration with no downtime.", duration: "45–60 min" },
-      { name: "Acne & scar treatment", text: "Combined medical and procedure-based plans for active acne and scarring.", duration: "Plan-based" },
-      { name: "Pigmentation & tan removal", text: "Targeted treatments for melasma, sun spots and uneven tone.", duration: "Plan-based" },
-      { name: "Anti-ageing care", text: "Treatments to soften fine lines and improve skin texture.", duration: "Consultation first" },
+      { name: "Laser hair reduction", text: "Long-term reduction of unwanted hair on face and body.", duration: "15–60 min · 6–8 sessions", image: "/images/treatments/laser-hair-reduction.jpg" },
+      { name: "Chemical peels", text: "Controlled exfoliation for pigmentation, acne and dullness.", duration: "30 min · 4–6 sessions", image: "/images/treatments/chemical-peel.jpg" },
+      { name: "HydraFacial & medi-facials", text: "Deep cleansing, extraction and hydration with no downtime.", duration: "45–60 min", image: "/images/treatments/medi-facial.jpg" },
+      { name: "Acne & scar treatment", text: "Combined medical and procedure-based plans for active acne and scarring.", duration: "Plan-based", image: "/images/treatments/acne-scar.jpg" },
+      { name: "Pigmentation & tan removal", text: "Targeted treatments for melasma, sun spots and uneven tone.", duration: "Plan-based", image: "/images/treatments/pigmentation.jpg" },
+      { name: "Anti-ageing care", text: "Treatments to soften fine lines and improve skin texture.", duration: "Consultation first", image: "/images/treatments/anti-ageing.jpg" },
     ],
     benefits: [
       { title: "Medical supervision", text: "Treatments planned and overseen by Dr. Sukhmani, not a beautician." },

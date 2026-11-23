@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { dentists, fullAddress, generalFaqs, images, mapsEmbedSrc, mapsLink, serviceHref, services, site, testimonials, whatsappLink } from "@/lib/site";
+import { dentists, fullAddress, generalFaqs, images, mapsEmbedSrc, mapsLink, serviceHref, services, site, testimonials, videos, whatsappLink } from "@/lib/site";
 import { Faq, Photo } from "@/components/ui";
 import Icon, { serviceIcon } from "@/components/Icon";
 import QuickBook from "@/components/home/QuickBook";
@@ -89,11 +90,17 @@ export function TreatmentGrid() {
               <Link href={serviceHref(s.slug)} className="lift group flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-line">
                 <div className="relative">
                   <Photo src={images[s.image].src} label={images[s.image].alt} className="aspect-[16/10] rounded-none" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+                  <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink backdrop-blur">{s.category === "Aesthetics" ? "Cosmetology" : s.category}</span>
                   <span className="absolute -bottom-6 left-5 grid h-12 w-12 place-items-center rounded-xl bg-white text-clay shadow-lg ring-1 ring-line"><Icon name={serviceIcon[s.slug]} size={22} /></span>
                 </div>
                 <div className="flex flex-1 flex-col p-5 pt-9">
                   <h3 className="font-serif text-lg font-semibold text-ink group-hover:text-clay">{s.name}</h3>
                   <p className="mt-1.5 flex-1 text-[15px] text-muted">{s.short}</p>
+                  <div className="num mt-4 flex flex-wrap gap-2 text-[12px]">
+                    {s.facts.slice(0, 2).map((f) => (
+                      <span key={f.label} className="rounded-full bg-stone px-2.5 py-1 text-ink-soft"><span className="text-muted">{f.label}:</span> {f.value}</span>
+                    ))}
+                  </div>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-forest">Know more <Icon name="arrow" size={15} className="transition-transform group-hover:translate-x-1" /></span>
                 </div>
               </Link>
@@ -117,7 +124,10 @@ export function WhyTrust() {
     <section className="section">
       <div className="container-x grid items-center gap-10 lg:grid-cols-12">
         <div data-reveal className="relative lg:col-span-5">
-          <Photo src={images.checkup.src} label={images.checkup.alt} position="60% 40%" className="aspect-[4/5] rounded-3xl" sizes="(min-width: 1024px) 40vw, 100vw" />
+          <div className="relative mx-auto aspect-[9/16] max-h-[620px] overflow-hidden rounded-3xl bg-ink shadow-[0_30px_70px_-30px_rgba(22,34,46,0.5)] sm:aspect-[4/5]">
+            <video src={videos.patient.src} poster={videos.patient.poster} autoPlay muted loop playsInline preload="metadata"
+              aria-label="Video: Dr. Bindra with a happy patient in the treatment room" className="h-full w-full object-cover" />
+          </div>
           <div className="absolute -bottom-5 right-3 rounded-2xl bg-clay p-4 sm:p-5 text-white shadow-xl sm:right-6">
             <p className="num font-serif text-3xl font-bold">{site.rating}★</p>
             <p className="text-sm text-white/85">{site.reviewCount} Google reviews</p>
@@ -150,9 +160,15 @@ export function Doctors() {
         <ul data-reveal-stagger className="mt-10 grid gap-5 md:grid-cols-2">
           {dentists.map((d) => (
             <li key={d.name} className="card flex flex-col gap-5 p-6 sm:flex-row sm:items-center">
-              <span className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-forest to-ink font-serif text-4xl font-bold text-white">
-                {d.name.replace(/^Dr\.?\s*/, "").split(" ").map((w) => w[0]).slice(0, 2).join("")}
-              </span>
+              {d.photo ? (
+                <span className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl bg-stone">
+                  <Image src={d.photo} alt={d.name} fill sizes="112px" className="object-cover" />
+                </span>
+              ) : (
+                <span className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-forest to-ink font-serif text-4xl font-bold text-white">
+                  {d.name.replace(/^Dr\.?\s*/, "").split(" ").map((w) => w[0]).slice(0, 2).join("")}
+                </span>
+              )}
               <div className="flex-1">
                 <h3 className="font-serif text-xl font-bold text-ink">{d.name}</h3>
                 <p className="mt-0.5 text-sm font-medium text-clay">{d.role}</p>

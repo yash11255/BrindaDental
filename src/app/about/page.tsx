@@ -18,7 +18,7 @@ export default function About() {
   return (
     <>
       <section className="relative">
-        <Photo src={images.clinic.src} label={images.clinic.alt} priority sizes="100vw" className="h-64 rounded-none md:h-96" />
+        <Photo src={images.building.src} label={images.building.alt} priority sizes="100vw" position="50% 30%" className="h-64 rounded-none md:h-[28rem]" />
       </section>
       <section className="section">
         <div className="container-x max-w-4xl">
@@ -52,7 +52,7 @@ export default function About() {
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {dentists.map((d) => (
               <div key={d.name} className="card overflow-hidden">
-                <Monogram name={d.name} className="aspect-[4/3] rounded-none" />
+                {d.photo ? <Photo src={d.photo} label={d.name} className="aspect-[4/3] rounded-none" position="50% 25%" sizes="(min-width: 1024px) 33vw, 50vw" /> : <Monogram name={d.name} className="aspect-[4/3] rounded-none" />}
                 <div className="p-5">
                   <p className="font-bold text-navy">{d.name}</p>
                   <p className="text-sm text-gray-600">{d.role}</p>
@@ -60,6 +60,7 @@ export default function About() {
               </div>
             ))}
           </div>
+          <Photo src={images.teamWide.src} label={images.teamWide.alt} className="mt-8 aspect-[16/9] md:aspect-[21/9]" sizes="100vw" />
           <div className="mt-10"><RatingBadge /></div>
         </div>
       </section>
@@ -68,9 +69,9 @@ export default function About() {
         <div className="container-x">
           <p className="eyebrow">Clinic environment</p>
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            <Photo src={images.chair.src} label={images.chair.alt} className="aspect-[4/3]" sizes="(min-width: 640px) 33vw, 100vw" />
-            <Photo src={images.checkup.src} label={images.checkup.alt} className="aspect-[4/3]" sizes="(min-width: 640px) 33vw, 100vw" />
-            <Photo src={images.rootCanal.src} label={images.rootCanal.alt} className="aspect-[4/3]" sizes="(min-width: 640px) 33vw, 100vw" />
+            <Photo src={images.clinic.src} label={images.clinic.alt} className="aspect-[4/3]" sizes="(min-width: 640px) 33vw, 100vw" />
+            <Photo src={images.implantRoom.src} label={images.implantRoom.alt} className="aspect-[4/3]" sizes="(min-width: 640px) 33vw, 100vw" />
+            <Photo src={images.facial.src} label={images.facial.alt} className="aspect-[4/3]" sizes="(min-width: 640px) 33vw, 100vw" />
           </div>
         </div>
       </section>

@@ -47,13 +47,15 @@ import { services } from "./services";
 export const dentists = [
   {
     name: "Dr. Himanshu Bindra",
+    photo: "/images/clinic/dr-bindra-portrait.jpg" as string | undefined,
     role: "Founder · Dental Implants & Smile Designing",
-    bio: "Leads the practice and personally oversees every treatment plan, from consultation through aftercare. [credentials & bio to confirm]",
+    bio: "Leads the practice and personally oversees every treatment plan, from consultation through aftercare.",
   },
   {
     name: "Dr. Sukhmani",
+    photo: "/images/clinic/dr-sukhmani-portrait.jpg" as string | undefined,
     role: "Cosmetologist · Facial Aesthetics & Lasers",
-    bio: "Heads the Centre for Facial Aesthetics & Lasers. [credentials & bio to confirm]",
+    bio: "Heads the Centre for Facial Aesthetics & Lasers.",
   },
 ];
 
@@ -146,29 +148,58 @@ export const firstVisit = [
   { t: "30–45 min", title: "Your plan, in writing", text: "What we found, the options, and the cost of each. You decide later — nothing is booked on the spot." },
 ];
 
-// ── Images (stand-ins until the clinic's own photos arrive) ──
-// All from Wikimedia Commons / Flickr under open licences; credits rendered on /image-credits.
+// ── Images ──
+// Real clinic photography lives in /public/images/clinic. A few explanatory stock images remain
+// (implant illustration, X-ray, smile, child check-up) — credits on /image-credits.
+const c = (f: string) => `/images/clinic/${f}.jpg`;
 export const images = {
-  clinic: { src: "/images/clinic-room.jpg", alt: "A bright dental treatment room with a blue patient chair" },
-  chair: { src: "/images/treatment-chair.jpg", alt: "Dental chair and overhead light in a clinic" },
+  // clinic photos
+  building: { src: c("building"), alt: "Dr. Bindra Dental Care Centre building — Centre for Dental Excellence since 2015" },
+  building2: { src: c("building-2"), alt: "Clinic building with the cosmetology and implant institute signage" },
+  team: { src: c("team"), alt: "Dr. Bindra and the clinic team" },
+  teamWide: { src: c("team-3"), alt: "The Dr. Bindra Dental Care Centre team at the clinic entrance" },
+  drBindra: { src: c("dr-bindra"), alt: "Dr. Himanshu Bindra in the implant treatment room" },
+  clinic: { src: c("operatory"), alt: "Dental treatment room with a modern chair and ring light" },
+  chair: { src: c("operatory-wide"), alt: "Treatment room with dental chair, sink and instruments" },
+  implantRoom: { src: c("implant-room"), alt: "Implant treatment room at the Dr. Bindra Institute" },
+  implantRoom2: { src: c("implant-room-2"), alt: "Implant suite with dental chair and overhead light" },
+  implantSign: { src: c("implantologist-sign"), alt: "Implantologist Dr. Bindra sign in the treatment room" },
+  facial: { src: c("cosmetology-room"), alt: "Cosmetology treatment room with aesthetic bed and ring light" },
+  cosmetologyBed: { src: c("cosmetology-bed"), alt: "Aesthetic treatment bed in the cosmetology wing" },
+  reception: { src: c("reception"), alt: "Reception with the clinic logo and product shelves" },
+  consultation: { src: c("consultation"), alt: "Consultation desk at the clinic" },
+  // explanatory stock
   checkup: { src: "/images/checkup.jpg", alt: "A dentist gently examining a young boy's teeth" },
   smile: { src: "/images/smile.jpg", alt: "A woman with a natural, confident smile" },
   implant: { src: "/images/implant.jpg", alt: "Illustration of a dental implant and crown seated in the jawbone" },
   rootCanal: { src: "/images/root-canal.jpg", alt: "Dentist pointing to a root canal on a dental X-ray" },
-  facial: { src: "/images/facial.jpg", alt: "A patient relaxing during a facial skin treatment" },
+  whitening: { src: "/images/treatments/whitening-shade-guide.jpg", alt: "Dental shade guide used to measure tooth whiteness" },
+  aligner: { src: "/images/treatments/clear-aligner.jpg", alt: "A transparent clear aligner tray" },
+} as const;
+
+export const videos = {
+  intro: { src: "/videos/brand-intro.mp4", poster: "/videos/brand-intro-poster.jpg", title: "Dr. Bindra Dental Care Centre", vertical: false },
+  patient: { src: "/videos/doctor-patient.mp4", poster: "/videos/doctor-patient-poster.jpg", title: "A happy patient after treatment", vertical: true },
 } as const;
 
 export const serviceImage: Record<string, keyof typeof images> = Object.fromEntries(services.map((s) => [s.slug, s.image]));
 
 export const imageCredits = [
-  { file: "clinic-room.jpg", author: "AuliRaha", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Inside_of_Dental_Clinic.jpg" },
   { file: "checkup.jpg", author: "Frederick Noronha", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:An_Indian_dentist_at_work.jpg" },
   { file: "smile.jpg", author: "Yosarian", license: "CC BY-SA 2.5", url: "https://commons.wikimedia.org/wiki/File:Indian_woman_smiles.jpg" },
-  { file: "treatment-chair.jpg", author: "IrfanDP", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Dental_chair_in_a_dentist_clinic.jpg" },
   { file: "implant.jpg", author: "Wikimedia Commons contributor", license: "CC BY-SA", url: "https://commons.wikimedia.org/wiki/File:Dental-implant-illustration.jpg" },
+  { file: "treatments/whitening-shade-guide.jpg", author: "Shaimaa Abdellatif", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Shade_guide.jpg" },
+  { file: "treatments/clear-aligner.jpg", author: "Smikey Io", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Invisalign_aligner.jpg" },
+  { file: "treatments/laser-hair-reduction.jpg", author: "Amaregenmed (Alice Pien, MD)", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Laser-hair-removal-face-ama-regenerative-medicine.jpg" },
+  { file: "treatments/medi-facial.jpg", author: "Keyfwellness", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:SPA_SKIN_CARE.jpg" },
+  { file: "treatments/acne-scar.jpg", author: "NewAgeAesthetics", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Microdermabrasion_cosmetic_procedure.jpg" },
+  { file: "treatments/chemical-peel.jpg", author: "Shixart1985", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Woman_applying_serum_on_her_face_closeup.jpg" },
+  { file: "treatments/pigmentation.jpg", author: "Shixart1985", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Woman_applies_skin_cream_at_home_closeup.jpg" },
+  { file: "treatments/anti-ageing.jpg", author: "Shixart1985", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Cucumber_slices_placed_beside_a_green_facial_mask_and_a_skincare_applicator_on_a_light_pink_background.jpg" },
   { file: "root-canal.jpg", author: "Dr. Alan Carr (Flickr)", license: "CC BY 2.0", url: "https://www.flickr.com/photo.gne?id=6219931567" },
-  { file: "facial.jpg", author: "Keyfwellness", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:SPA_SKIN_CARE.jpg" },
 ];
+
+// Clinic photos and videos in /public/images/clinic and /public/videos are the clinic's own.
 
 // ── Booking → WhatsApp ──
 export type BookingDetails = { name: string; phone: string; reason?: string; date?: string; window?: string; message?: string };

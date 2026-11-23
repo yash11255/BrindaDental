@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { legalPages } from "@/components/LegalPage";
 import { fullAddress, instagram, mapsLink, serviceHref, services, site, whatsappLink } from "@/lib/site";
 
 export default function Footer() {
@@ -47,7 +48,23 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col gap-3 py-6 text-[13px] text-white/45 md:flex-row md:justify-between">
           <p>© {new Date().getFullYear()} {site.name}. Information on this site is general and not a substitute for an in-person examination.</p>
-          <p>Enquiry details are used only to arrange your visit. <span className="whitespace-nowrap">[Privacy policy — to add]</span> · <Link href="/image-credits" className="hover:text-white">Image credits</Link></p>
+          <nav aria-label="Legal">
+            <ul className="flex flex-wrap gap-x-4 gap-y-2">
+              {legalPages.map((p) => (
+                <li key={p.href}><Link href={p.href} className="hover:text-white">{p.label}</Link></li>
+              ))}
+              <li><Link href="/image-credits" className="hover:text-white">Image credits</Link></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10 bg-black/20">
+        <div className="container-x py-4 text-center text-[13px] text-white/55">
+          Powered by{" "}
+          <a href="https://onehandlabs.in/" target="_blank" rel="noopener" className="font-semibold text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white">
+            ONE Hand Labs
+          </a>
         </div>
       </div>
     </footer>

@@ -9,21 +9,21 @@ import Icon from "@/components/Icon";
 
 const slides = [
   {
-    img: images.clinic,
+    img: images.building,
     tag: `Trusted in Ambala Cantt since ${site.since}`,
     title: "Complete dental care, under one roof",
     text: "Check-ups, implants, root canals, smile design and cosmetology — with honest advice and a written estimate before treatment.",
     cta: { label: "Explore treatments", href: "/services" },
   },
   {
-    img: images.implant,
+    img: images.implantRoom,
     tag: "Dr. Bindra Institute for Dental Implants",
     title: "Fixed teeth that look and feel natural",
     text: "Implants planned from X-rays and a scan, and placed by Dr. Bindra himself.",
     cta: { label: "About dental implants", href: "/services/dental-implants" },
   },
   {
-    img: images.rootCanal,
+    img: images.clinic,
     tag: "Same-day slots for tooth pain",
     title: "Gentle root canal treatment",
     text: "Stop the pain and save your tooth — under local anaesthesia, usually in one or two visits.",

@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original WhatsApp exports (optimised copies live in public/videos and public/images/clinic)
+public/images/WhatsApp*

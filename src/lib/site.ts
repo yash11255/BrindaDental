@@ -6,7 +6,7 @@ export const site = {
   tagline: "Centre for Dental Excellence since 2015",
   url: "https://bindradentalcare.com", // TODO: confirm domain
   rating: 4.8,
-  reviewCount: 264,
+  reviewCount: 265,
   since: 2015,
   phone: "+91 00000 00000", // TODO: real clinic phone from GMB
   phoneDisplay: "+91 00000 00000", // TODO: formatted for display
@@ -59,13 +59,8 @@ export const dentists = [
   },
 ];
 
-// TODO: replace with real Google review excerpts (with permission).
-export const testimonials = [
-  { name: "Patient", text: "Professional staff and painless treatment. Highly recommended.", stars: 5 },
-  { name: "Patient", text: "Best dental clinic in Ambala Cantt. Very clean and modern.", stars: 5 },
-  { name: "Patient", text: "Dr. Bindra explained everything clearly before my implant.", stars: 5 },
-  { name: "Patient", text: "Friendly team, on-time appointments and great results.", stars: 5 },
-];
+// Reviews now come live from Google (see lib/googleReviews.ts). Kept empty so no invented reviews are ever shown.
+export const testimonials: { name: string; text: string; stars: number }[] = [];
 
 export const generalFaqs = [
   { q: "Where is the clinic located?", a: `We are at ${"Parkash Sweets Chowk, Ram Bagh Road, Sadar Bazar, Ambala Cantt"}.` },
